@@ -4,22 +4,21 @@
 
 ## Description
 
-Hungry Nomad Developer is a game about a developer that struggles to eat healthy while travelling. The player has to navigate through obstacles to get healthy food and avoid eating something that will poison him. If the character gets food poisoining more than 3 times, the game is over. On the other hand, if he reaches 100 score points, he gets safe to the airport.
+Nomad Skater is a game about a skateboarder that earns money from tricks while travelling. The player has to navigate through obstacles to get money and avoid the police officers who think that 'skateboarding is a crime'. If the character gets caught more than 3 times, the game is over. On the other hand, if he reaches 100 score points, he gets safe to the airport to travel to the next destination.
 
 ## MVP
 
-The "Hungry Nomad Developer":
+The "Nomad Skater":
 
 - has a player that jumps, and moves forward and backward
-- has roten food that apears randomly from the right side of the screen
-- if the player eats one pierce of rotten food, scored points decrease by -1
-- if the player eats, the game is over.
-- has levels of speed every 20 points.
+- police officers appear randomly from the right side of the screen
+- if the player gets caught once, scored points decrease by -1
+- if the player gets caught three times, the game is over.
 
 ## Backlog
 
-- add 5 levels of complexity.
-- add increase speed
+- add 5 levels of complexity. Each level means 20 points.
+- add increased speed at every reached level.
 
 ## Data structure
 
@@ -38,6 +37,13 @@ moveForward(){}
 moveBackward(){}
 jump(){}
 score(){}
+
+- police()
+  platform()
+  character()
+  animate()
+  start()
+  restart()
 
 ## States y States Transitions
 
