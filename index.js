@@ -11,9 +11,6 @@ canvas.style.border = "2px solid #006994";
 
 let audioGameOver = new Audio("./audio/NWA-Fuck tha Police.mp3");
 let audioGameScreen = new Audio("./audio/audioGameScreen.mp3");
-let audioStartScreen = new Audio(
-  "./audio/Jay-Rock-feat-Kendrick-Lamar_-_Hood-Gone-Love-It-GTA-V-Radio-Los-SantosGTA5.mp3"
-);
 
 let imageStart = new Image();
 imageStart.src = "./images/start-img.jpg";
@@ -45,13 +42,11 @@ let isArrowLeft = false,
 //let lives = 3;
 
 // skater position
-let skaterX = 75,
-  skaterY = canvas.height - (skater.height + fg.height);
+let skaterX = 75;
 let skaterIncr = 1;
 
 // officer1 position
-let officer1X = 950,
-  officer1Y = canvas.height - (officer1.height + fg.height);
+let officer1X = 950;
 let officers = [{ x: 950, y: canvas.height - (officer1.height + fg.height) }];
 
 // platform position
@@ -63,8 +58,8 @@ let platforms = [{ x: 950, y: 300 }];
 let fgroundArr = [{ x: 950, y: canvas.height - fg.height }];
 
 // coins
-let coinX = 300,
-  coinY = canvas.height - (coin.height + fg.height);
+let coinX = 300;
+
 let coins = [{ x: 950, y: canvas.height - fg.height }];
 
 document.addEventListener("keydown", (event) => {
@@ -120,7 +115,6 @@ function money() {
       skaterY + skater.height > coins[i].y
     ) {
       score++;
-      
     }
     if (coins[i].x < canvas.width / 2 && coins[i].x >= canvas.width / 2 - 5) {
       coins.push({
@@ -216,7 +210,6 @@ function animate() {
     gamePage.style.display = "none";
     audioGameOver.play();
     audioGameScreen.pause();
-    audioStartScreen.pause();
   } else {
     intervalId = requestAnimationFrame(animate);
   }
@@ -228,7 +221,6 @@ function start() {
   gameOverPage.style.display = "none";
   animate();
   audioGameScreen.play();
-  audioStartScreen.pause();
 }
 
 function restart() {
@@ -247,7 +239,12 @@ window.addEventListener("load", () => {
   startPage.style.display = "block";
   gamePage.style.display = "none";
   gameOverPage.style.display = "none";
-  audioStartScreen.play();
+
+  skaterY = canvas.height - (skater.height + fg.height);
+  officer1Y = canvas.height - (officer1.height + fg.height);
+  fgroundArr = [{ x: 950, y: canvas.height - fg.height }];
+  coinY = canvas.height - (coin.height + fg.height);
+  officers = [{ x: 950, y: canvas.height - (officer1.height + fg.height) }];
 
   startBtn.addEventListener("click", () => {
     start();
@@ -258,3 +255,4 @@ window.addEventListener("load", () => {
     start();
   });
 });
+
