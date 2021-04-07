@@ -113,7 +113,6 @@ function money() {
   for (let i = 0; i < coins.length; i++) {
     ctx.drawImage(coin, coins[i].x, coins[i].y);
     coins[i].x = coins[i].x - 5;
-
     if (
       skaterX + skater.width > coins[i].x &&
       skaterX < coins[i].x + coin.width &&
@@ -121,8 +120,8 @@ function money() {
       skaterY + skater.height > coins[i].y
     ) {
       score++;
+      
     }
-
     if (coins[i].x < canvas.width / 2 && coins[i].x >= canvas.width / 2 - 5) {
       coins.push({
         x: canvas.width + Math.floor(Math.random() * 600),
