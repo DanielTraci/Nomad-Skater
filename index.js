@@ -12,9 +12,6 @@ canvas.style.border = "2px solid #006994";
 let audioGameOver = new Audio("./audio/NWA-Fuck tha Police.mp3");
 let audioGameScreen = new Audio("./audio/audioGameScreen.mp3");
 
-let imageStart = new Image();
-imageStart.src = "./images/start-img.jpg";
-
 let bg = new Image();
 bg.src = "./images/bg-img.jpg";
 
@@ -115,7 +112,9 @@ function money() {
       skaterY + skater.height > coins[i].y
     ) {
       score++;
+      coins[i].x = 0 - coin.width;
     }
+
     if (coins[i].x < canvas.width / 2 && coins[i].x >= canvas.width / 2 - 5) {
       coins.push({
         x: canvas.width + Math.floor(Math.random() * 600),
@@ -255,4 +254,3 @@ window.addEventListener("load", () => {
     start();
   });
 });
-
