@@ -1,13 +1,13 @@
-/*
-html,
+/*html,
 body {
   margin: 0;
   padding: 0;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.header {
-  background-image: url("./images/158ade6b440aa33d9dac62395a262a1b.jpg");
+
+.startpage {
+  background-image: url("./images/start-img.jpg");
   background-repeat: no repeat;
   background-position: 0 0;
   background-repeat: no repeat;
@@ -17,6 +17,8 @@ body {
   position: relative;
 }
 
+
+/*
 #start {
   background-color: #fe4f29;
   color: white;
@@ -46,4 +48,3 @@ body {
 .text {
   color: white;
 }
-*/

@@ -7,10 +7,30 @@
     <title>Nomad Skater</title>
   </head>
   <body>
-    <button id="start">Start</button>
-    <canvas id="canvas" width="950" height="534"></canvas>
+    <section class="startpage">
+      <div id="game-name">
+        <h1>NOMAD SKATER</h1>
+        <h3>WOMEN LOVE HIM</h3>
+        <h3>POLICE HATES HIS GUTS</h3>
+      </div>
+      <div id="instructins">
+        <h3>Instructions</h3>
+        <h4>Use ← ↑ → on your keyboard to navigate through the obstacles.</h4>
+        <h4>Avoid saying "Hi!" to the Police. Don't get arrested!</h4>
+      </div>
+      <button id="start">Start skating</button>
+    </section>
 
-    <button id="restart">Restart</button>
+    <section class="gamepage">
+      <canvas id="canvas" width="950" height="534"></canvas>
+    </section>
+
+    <section class="gameoverpage">
+      <h1>NOMAD SKATER</h1>
+      <h3>BUSTED!</h3>
+      <h4>Show them a trick inside the Police station</h4>
+      <button id="restart">Try again</button>
+    </section>
 
     <script src="/index.js"></script>
   </body>

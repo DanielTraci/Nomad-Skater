@@ -1,9 +1,23 @@
+let startPage = document.querySelector(".startpage");
+let gamePage = document.querySelector(".gamepage");
+let gameOverPage = document.querySelector(".gameoverpage");
+
+let startBtn = document.querySelector("#start");
+let restartBtn = document.querySelector("#restart");
+
 let canvas = document.getElementById("canvas");
 let ctx = canvas.getContext("2d");
 canvas.style.border = "2px solid #006994";
-let gameOverMusic = new Audio("./audio/NWA-Fuck tha Police.mp3"); //url goes here
 
-///DONE - IMAGES ///
+let audioGameOver = new Audio("./audio/NWA-Fuck tha Police.mp3");
+let audioGameScreen = new Audio("./audio/audioGameScreen.mp3");
+let audioStartScreen = new Audio(
+  "./audio/Jay-Rock-feat-Kendrick-Lamar_-_Hood-Gone-Love-It-GTA-V-Radio-Los-SantosGTA5.mp3"
+);
+
+let imageStart = new Image();
+imageStart.src = "./images/start-img.jpg";
+
 let bg = new Image();
 bg.src = "./images/bg-img.jpg";
 
@@ -22,11 +36,6 @@ skater.src = "./images/skater-img.png";
 let coin = new Image();
 coin.src = "./images/coin-img.png";
 
-///DONE - The DOM of the start and the restart buttons ///
-let startBtn = document.querySelector("#start");
-let restartBtn = document.querySelector("#restart");
-
-/// GAME Status QUO ///
 let isGameOver = false;
 let intervalId = 0;
 let score = 0;
@@ -92,7 +101,6 @@ function character() {
     skaterX = skaterX - 10;
   }
   if (isArrowUp && skaterY > 0) {
-    console.log(skaterY, skater.height);
     skaterY = skaterY - 10;
   }
 
@@ -128,14 +136,14 @@ function police() {
   for (let i = 0; i < officers.length; i++) {
     ctx.drawImage(officer1, officers[i].x, officers[i].y);
     officers[i].x = officers[i].x - 5;
-    /*if (
+    if (
       skaterX + skater.width > officers[i].x &&
       skaterX < officers[i].x + officer1.width &&
       skaterY < officers[i].y + officer1.height &&
       skaterY + skater.height > officers[i].y
     ) {
       isGameOver = true;
-    }*/
+    }
 
     if (
       officers[i].x < canvas.width / 2 &&
@@ -203,31 +211,44 @@ function animate() {
 
   if (isGameOver) {
     cancelAnimationFrame(intervalId);
-    canvas.style.display = "none";
+    gameOverPage.style.display = "block";
     restartBtn.style.display = "block";
+    startPage.style.display = "none";
+    gamePage.style.display = "none";
+    audioGameOver.play();
+    audioGameScreen.pause();
+    audioStartScreen.pause();
   } else {
     intervalId = requestAnimationFrame(animate);
   }
 }
 
 function start() {
-  canvas.style.display = "block";
-  startBtn.style.display = "none";
-  restartBtn.style.display = "none";
+  startPage.style.display = "none";
+  gamePage.style.display = "";
+  gameOverPage.style.display = "none";
   animate();
+  audioGameScreen.play();
+  audioStartScreen.pause();
 }
 
 function restart() {
   isGameOver = false;
   skaterX = 75;
   skaterY = canvas.height - (skater.height + fg.height);
-  start();
+  officers = [{ x: 950, y: canvas.height - (officer1.height + fg.height) }];
+  coins = [{ x: 950, y: canvas.height - fg.height }];
+  platforms = [{ x: 950, y: 300 }];
+  audioGameOver.load();
+  audioGameScreen.load();
+  score = 0;
 }
 
 window.addEventListener("load", () => {
-  canvas.style.display = "none";
-  restartBtn.style.display = "none";
-  start();
+  startPage.style.display = "block";
+  gamePage.style.display = "none";
+  gameOverPage.style.display = "none";
+  audioStartScreen.play();
 
   startBtn.addEventListener("click", () => {
     start();
@@ -235,5 +256,6 @@ window.addEventListener("load", () => {
 
   restartBtn.addEventListener("click", () => {
     restart();
+    start();
   });
 });
