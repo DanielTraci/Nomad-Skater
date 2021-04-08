@@ -53,12 +53,18 @@ let platform1X = 700,
   platform1Y = 300;
 let platforms = [{ x: 950, y: 300 }];
 
+let speed = 5;
+
 // foreground
 let fgroundArr = [{ x: 950, y: canvas.height - fg.height }];
 
 // coins
 let coinX = 300;
-let coins = [{ x: 950, y: canvas.height - fg.height }];
+let coins = [
+  { x: 950, y: canvas.height - (coin.height + fg.height) },
+  { x: 1300, y: canvas.height - (coin.height + fg.height) },
+  { x: 1650, y: canvas.height - (coin.height + fg.height) },
+];
 
 document.addEventListener("keydown", (event) => {
   if (event.code == "ArrowRight") {
@@ -104,8 +110,9 @@ function character() {
 
 function money() {
   for (let i = 0; i < coins.length; i++) {
+    console.log(coins[i].x, coins[i].y);
     ctx.drawImage(coin, coins[i].x, coins[i].y);
-    coins[i].x = coins[i].x - 5;
+    coins[i].x = coins[i].x - speed;
     if (
       skaterX + skater.width > coins[i].x &&
       skaterX < coins[i].x + coin.width &&
@@ -113,14 +120,11 @@ function money() {
       skaterY + skater.height > coins[i].y
     ) {
       score++;
-      coins[i].x = 0 - coin.width;
+      coins[i].x = canvas.width + Math.floor(Math.random() * 800);
     }
 
-    if (coins[i].x < canvas.width / 2 && coins[i].x >= canvas.width / 2 - 5) {
-      coins.push({
-        x: canvas.width + Math.floor(Math.random() * 600),
-        y: coinY,
-      });
+    if (coins[i].x < 0) {
+      coins[i].x = canvas.width + Math.floor(Math.random() * 800);
     }
   }
 }
@@ -128,7 +132,7 @@ function money() {
 function police() {
   for (let i = 0; i < officers.length; i++) {
     ctx.drawImage(officer1, officers[i].x, officers[i].y);
-    officers[i].x = officers[i].x - 5;
+    officers[i].x = officers[i].x - speed;
     if (
       skaterX + skater.width > officers[i].x &&
       skaterX < officers[i].x + officer1.width &&
@@ -143,7 +147,7 @@ function police() {
       officers[i].x >= canvas.width / 2 - 5
     ) {
       officers.push({
-        x: canvas.width + Math.floor(Math.random() * 600),
+        x: canvas.width + Math.floor(Math.random() * 400),
         y: canvas.height - (officer1.height + fg.height),
       });
     }
@@ -153,7 +157,7 @@ function police() {
 function platform() {
   for (let i = 0; i < platforms.length; i++) {
     ctx.drawImage(platform1, platforms[i].x, platforms[i].y);
-    platforms[i].x = platforms[i].x - 5;
+    platforms[i].x = platforms[i].x - speed;
 
     if (
       skaterX + skater.width > platforms[i].x &&
@@ -169,7 +173,7 @@ function platform() {
       platforms[i].x >= canvas.width / 2 - 5
     ) {
       platforms.push({
-        x: canvas.width + Math.floor(Math.random() * 600),
+        x: canvas.width + Math.floor(Math.random() * 800),
         y: 300,
       });
     }
@@ -178,9 +182,11 @@ function platform() {
 
 function foreground() {
   ctx.drawImage(fg, 0, canvas.height - fg.height);
+
   for (let i = 0; i < fgroundArr.length; i++) {
     ctx.drawImage(fg, fgroundArr[i].x, fgroundArr[i].y);
-    fgroundArr[i].x = fgroundArr[i].x - 5;
+    fgroundArr[i].x = fgroundArr[i].x - speed;
+
     if (fgroundArr[i].x == 0) {
       fgroundArr.push({ x: 950, y: canvas.height - fg.height });
     }
@@ -192,16 +198,26 @@ function scoringDisplay() {
   ctx.fillStyle = "#cb4154";
   ctx.fillText(`Score is: ${score}`, 420, canvas.height - 470);
 }
+/*
+function speedLevels() {
+  if (score == 100) {
+    speed = 10;
+  } else if (score >= 20) {
+    speed = 2;
+  } else if (score >= 5) {
+    speed = 20;
+  }
+}*/
 
 function animate() {
   ctx.drawImage(bg, 0, 0);
   character();
+
   police();
   platform();
+  foreground();
   money();
   scoringDisplay();
-  foreground();
-
   if (isGameOver) {
     cancelAnimationFrame(intervalId);
     gameOverPage.style.display = "block";
@@ -231,7 +247,11 @@ function restart() {
   skaterX = 75;
   skaterY = canvas.height - (skater.height + fg.height);
   officers = [{ x: 950, y: canvas.height - (officer1.height + fg.height) }];
-  coins = [{ x: 950, y: canvas.height - fg.height }];
+  coins = [
+    { x: 950, y: coinY },
+    { x: 1300, y: coinY },
+    { x: 1650, y: coinY },
+  ];
   platforms = [{ x: 950, y: 300 }];
   audioGameOver.load();
   audioGameScreen.load();
@@ -248,6 +268,11 @@ window.addEventListener("load", () => {
   fgroundArr = [{ x: 950, y: canvas.height - fg.height }];
   coinY = canvas.height - (coin.height + fg.height);
   officers = [{ x: 950, y: canvas.height - (officer1.height + fg.height) }];
+  coins = [
+    { x: 950, y: coinY },
+    { x: 1300, y: coinY },
+    { x: 1650, y: coinY },
+  ];
 
   startBtn.addEventListener("click", () => {
     start();
