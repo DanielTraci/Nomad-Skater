@@ -33,32 +33,20 @@ coin.src = "./images/coin-img.png";
 let isGameOver = false;
 let intervalId = 0;
 let score = 0;
+let speed = 5;
 let isArrowLeft = false,
   isArrowRight = false,
   isArrowUp = false;
 
-// score
 let finalScore = document.querySelector("#finalscore");
-
-// skater position
 let skaterX = 75;
 let skaterIncr = 1;
-
-// officer1 position
 let officer1X = 950;
 let officers = [{ x: 950, y: canvas.height - (officer1.height + fg.height) }];
-
-// platform position
 let platform1X = 700,
   platform1Y = 300;
 let platforms = [{ x: 950, y: 300 }];
-
-let speed = 5;
-
-// foreground
 let fgroundArr = [{ x: 950, y: canvas.height - fg.height }];
-
-// coins
 let coinX = 300;
 let coins = [
   { x: 950, y: canvas.height - (coin.height + fg.height) },
@@ -92,7 +80,6 @@ document.addEventListener("keyup", () => {
 
 function character() {
   ctx.drawImage(skater, skaterX, skaterY);
-
   if (isArrowRight && skaterX + skater.width < canvas.width) {
     skaterX = skaterX + 10;
   }
@@ -144,7 +131,7 @@ function police() {
 
     if (
       officers[i].x < canvas.width / 2 &&
-      officers[i].x >= canvas.width / 2 - 5
+      officers[i].x >= canvas.width / 2 - speed
     ) {
       officers.push({
         x: canvas.width + Math.floor(Math.random() * 400),
@@ -170,7 +157,7 @@ function platform() {
 
     if (
       platforms[i].x < canvas.width / 2 &&
-      platforms[i].x >= canvas.width / 2 - 5
+      platforms[i].x >= canvas.width / 2 - speed
     ) {
       platforms.push({
         x: canvas.width + Math.floor(Math.random() * 800),
@@ -182,12 +169,11 @@ function platform() {
 
 function foreground() {
   ctx.drawImage(fg, 0, canvas.height - fg.height);
-
   for (let i = 0; i < fgroundArr.length; i++) {
     ctx.drawImage(fg, fgroundArr[i].x, fgroundArr[i].y);
     fgroundArr[i].x = fgroundArr[i].x - speed;
 
-    if (fgroundArr[i].x == 0) {
+    if (fgroundArr[i].x < 0 && fgroundArr[i].x >= -speed) {
       fgroundArr.push({ x: 950, y: canvas.height - fg.height });
     }
   }
@@ -198,26 +184,41 @@ function scoringDisplay() {
   ctx.fillStyle = "#cb4154";
   ctx.fillText(`Score is: ${score}`, 420, canvas.height - 470);
 }
-/*
+
 function speedLevels() {
-  if (score == 100) {
+  if (score == 150) {
+    speed = 15;
+  } else if (score >= 135) {
+    speed = 14;
+  } else if (score >= 120) {
+    speed = 13;
+  } else if (score >= 105) {
+    speed = 12;
+  } else if (score >= 90) {
+    speed = 11;
+  } else if (score >= 75) {
     speed = 10;
-  } else if (score >= 20) {
-    speed = 2;
-  } else if (score >= 5) {
-    speed = 20;
+  } else if (score >= 60) {
+    speed = 9;
+  } else if (score >= 45) {
+    speed = 8;
+  } else if (score >= 30) {
+    speed = 7;
+  } else if (score >= 15) {
+    speed = 6;
   }
-}*/
+}
 
 function animate() {
   ctx.drawImage(bg, 0, 0);
   character();
-
   police();
   platform();
   foreground();
   money();
+  speedLevels();
   scoringDisplay();
+
   if (isGameOver) {
     cancelAnimationFrame(intervalId);
     gameOverPage.style.display = "block";
@@ -226,6 +227,7 @@ function animate() {
     gamePage.style.display = "none";
     finalScore.innerHTML = `Your score is: ${score}`;
     audioGameOver.play();
+    audioGameOver.volume = 0.1;
     audioGameOver.loop = true;
     audioGameScreen.pause();
   } else {
@@ -239,6 +241,7 @@ function start() {
   gameOverPage.style.display = "none";
   animate();
   audioGameScreen.play();
+  audioGameScreen.volume = 0.1;
   audioGameScreen.loop = true;
 }
 
@@ -255,6 +258,7 @@ function restart() {
   platforms = [{ x: 950, y: 300 }];
   audioGameOver.load();
   audioGameScreen.load();
+  speed = 5;
   score = 0;
 }
 
@@ -262,7 +266,6 @@ window.addEventListener("load", () => {
   startPage.style.display = "block";
   gamePage.style.display = "none";
   gameOverPage.style.display = "none";
-
   skaterY = canvas.height - (skater.height + fg.height);
   officer1Y = canvas.height - (officer1.height + fg.height);
   fgroundArr = [{ x: 950, y: canvas.height - fg.height }];
