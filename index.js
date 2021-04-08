@@ -36,7 +36,9 @@ let score = 0;
 let isArrowLeft = false,
   isArrowRight = false,
   isArrowUp = false;
-//let lives = 3;
+
+// score
+let finalScore = document.querySelector("#finalscore");
 
 // skater position
 let skaterX = 75;
@@ -56,7 +58,6 @@ let fgroundArr = [{ x: 950, y: canvas.height - fg.height }];
 
 // coins
 let coinX = 300;
-
 let coins = [{ x: 950, y: canvas.height - fg.height }];
 
 document.addEventListener("keydown", (event) => {
@@ -187,8 +188,8 @@ function foreground() {
 }
 
 function scoringDisplay() {
-  ctx.fillStyle = "#cb4154";
   ctx.font = "25px Arial";
+  ctx.fillStyle = "#cb4154";
   ctx.fillText(`Score is: ${score}`, 420, canvas.height - 470);
 }
 
@@ -207,7 +208,9 @@ function animate() {
     restartBtn.style.display = "block";
     startPage.style.display = "none";
     gamePage.style.display = "none";
+    finalScore.innerHTML = `Your score is: ${score}`;
     audioGameOver.play();
+    audioGameOver.loop = true;
     audioGameScreen.pause();
   } else {
     intervalId = requestAnimationFrame(animate);
@@ -220,6 +223,7 @@ function start() {
   gameOverPage.style.display = "none";
   animate();
   audioGameScreen.play();
+  audioGameScreen.loop = true;
 }
 
 function restart() {
