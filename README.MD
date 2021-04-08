@@ -36,24 +36,5 @@ startPage
 gamePage
 gameOverPage
 
-## Task
-
-main - buildDom
-main - buildStartScreen
-main - addEventListener
-main - buildGameScreen
-main - buildGameOverScreen
-main - addEventListener
-game - drawCanvas
-game - updateCanvas
-game - drawObstacles
-developer - moveLeft
-developer - moveRight
-developer - jump
-game - checkCollision
-game - keepScore
-game - GameOver
-game - addEventListener
-
 ## GAME
 https://danieltraci.github.io/Nomad-Skater/
