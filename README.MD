@@ -54,3 +54,6 @@ game - checkCollision
 game - keepScore
 game - GameOver
 game - addEventListener
+
+## GAME
+https://danieltraci.github.io/Nomad-Skater/
